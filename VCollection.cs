@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 
 namespace VEconomy
 {
@@ -208,9 +202,9 @@ namespace VEconomy
 		/// </summary>
 		public void Reverse() => Array.Reverse(Items);
 
-		private bool IsIndexValid(int index) => index>-1 && index<Length;
+		protected bool IsIndexValid(int index) => index>-1 && index<Length;
 
-		private bool IsIndexValid(params int[] index) => index.All(q=>IsIndexValid(q));
+		protected bool IsIndexValid(params int[] index) => index.All(q=>IsIndexValid(q));
 		/// <summary>
 		/// Finds the index position of the first occurance of a matching item.
 		/// </summary>
