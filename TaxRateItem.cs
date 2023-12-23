@@ -3,34 +3,27 @@
 	/// <summary>
 	/// Stores tax information.
 	/// </summary>
-	public struct TaxRateItem
+	/// <remarks>
+	/// Creates a new instance of the <see cref="TaxRateItem"/> struct object.
+	/// </remarks>
+	/// <param name="name"></param>
+	/// <param name="description"></param>
+	/// <param name="initialValue"></param>
+	public struct TaxRateItem(string name, string description, double initialValue)
 	{
 		/// <summary>
 		/// The name of this item.
 		/// </summary>
-		public readonly string Name;
+		public readonly string Name=name;
 		/// <summary>
 		/// The description of this item.
 		/// </summary>
-		public readonly string Description;
+		public readonly string Description=description;
 		/// <summary>
 		/// The tax percentage value.
 		/// </summary>
-		public double Value { get; set; }
+		public double Value { get; set; } = initialValue;
 
-
-		/// <summary>
-		/// Creates a new instance of the <see cref="TaxRateItem"/> struct object.
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="description"></param>
-		/// <param name="initialValue"></param>
-		public TaxRateItem(string name, string description, double initialValue)
-		{
-			Name=name;
-			Description=description;
-			Value=initialValue;
-		}
 		/// <inheritdoc cref="TaxRateItem(string, double)"/>
 		public TaxRateItem(string name) : this(name, "", 0) { }
 		/// <inheritdoc cref="TaxRateItem(string, double)"/>
