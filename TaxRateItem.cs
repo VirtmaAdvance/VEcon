@@ -24,6 +24,7 @@
 		/// </summary>
 		public double Value { get; set; } = initialValue;
 
+
 		/// <inheritdoc cref="TaxRateItem(string, double)"/>
 		public TaxRateItem(string name) : this(name, "", 0) { }
 		/// <inheritdoc cref="TaxRateItem(string, double)"/>
