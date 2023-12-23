@@ -31,6 +31,5 @@
 		/// <inheritdoc cref="TaxRateItem(string, double)"/>
 		public TaxRateItem(string name, string description) : this(name, description, 0) { }
 
-
 	}
 }
