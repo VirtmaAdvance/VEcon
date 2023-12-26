@@ -17,20 +17,18 @@
 		/// Creates a new instance of the <see cref="IntTable"/> class.
 		/// </summary>
 		/// <param name="name"></param>
-		public IntTable(string name)
-		{
-			Name=name;
-			Added+=UpdateColumnCollection;
-			Removed+=UpdateColumnCollection;
-			Updated+=UpdateColumnCollection;
-		}
+		public IntTable(string name) : this(name, null) { }
 		/// <inheritdoc cref="IntTable(string)"/>
 		/// <param name="name"></param>
 		/// <param name="records"></param>
-		public IntTable(string name, IEnumerable<IntRecord> records)
+		public IntTable(string name, IEnumerable<IntRecord>? records)
 		{
 			Name=name;
-			Items=records.ToArray();
+			if(records is not null)
+				Items=records.ToArray();
+			Added+=UpdateColumnCollection;
+			Removed+=UpdateColumnCollection;
+			Updated+=UpdateColumnCollection;
 		}
 
 		private void UpdateColumnCollection(object sender, object? output)
