@@ -58,6 +58,5 @@
 
 		private static IntRecordItem CreateNewItem(string name, object value) => new IntRecordItem(name, value);
 
-
 	}
 }
