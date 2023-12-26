@@ -264,5 +264,13 @@ namespace VEconomy
 		public IEnumerator<T> GetEnumerator() => (IEnumerator<T>)Items.GetEnumerator();
 
 		IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
+		/// <summary>
+		/// Sorts the collection.
+		/// </summary>
+		/// <param name="comparer"></param>
+		public void Sort(IComparer? comparer) => Array.Sort(Items, comparer);
+		/// <inheritdoc cref="Sort(IComparer?)"/>
+		public void Sort(Comparison<T> comparison) => Array.Sort(Items, comparison);
+
 	}
 }
