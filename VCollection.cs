@@ -227,7 +227,10 @@ namespace VEconomy
 		public T First(Func<T, bool> predicate) => Items.First(predicate);
 
 		private static bool EqualTo(T? a, T? b) => (a is null && b is null) || (a is not null && b is not null && a.Equals(b));
-
+		/// <summary>
+		/// Gets the Enumerator for this object.
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerator<T> GetEnumerator() => (IEnumerator<T>)Items.GetEnumerator();
 
 		IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
