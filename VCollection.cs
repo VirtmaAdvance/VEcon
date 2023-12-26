@@ -228,14 +228,6 @@ namespace VEconomy
 
 		private static bool EqualTo(T? a, T? b) => (a is null && b is null) || (a is not null && b is not null && a.Equals(b));
 
-		//public int IndexOf(string name)
-		//{
-		//	for(int i=0;i<Length;i++)
-		//		if(Items[i].Name.Equals(name))
-		//			return i;
-		//	return -1;
-		//}
-
 		public IEnumerator<T> GetEnumerator() => (IEnumerator<T>)Items.GetEnumerator();
 
 		IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
