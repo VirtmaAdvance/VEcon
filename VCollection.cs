@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Reflection;
 
 namespace VEconomy
 {
@@ -34,13 +36,43 @@ namespace VEconomy
 			set
 			{
 				if(IsIndexValid(index))
-					Items[index]=value;
+					Update(index, value);
 				else
 					Insert(index, value);
 			}
 		}
+		/// <summary>
+		/// Invoked when an item has been added to the collection.
+		/// </summary>
+		public event CollectionModifiedEvent? Added;
+		/// <summary>
+		/// Invoked when an item has been removed from the collection.
+		/// </summary>
+		public event CollectionModifiedEvent? Removed;
+		/// <summary>
+		/// Invoked when an item has been updated/changed in the collection.
+		/// </summary>
+		public event CollectionModifiedEvent? Updated;
+		/// <summary>
+		/// Invoked when an item has been moved within the collection.
+		/// </summary>
+		public event CollectionModifiedEvent? Moved;
 
 
+		/// <inheritdoc cref="VCollection{T}(T[])"/>
+		public VCollection() { }
+		/// <inheritdoc cref="VCollection{T}(T[])"/>
+		public VCollection(IEnumerable<T> items) : this(items.ToArray()) { }
+		/// <inheritdoc cref="VCollection{T}(T[])"/>
+		public VCollection(VCollection<T> items) : this(items.Items) { }
+		/// <summary>
+		/// Creates a new instance of the <see cref="VCollection{T}"/> class.
+		/// </summary>
+		/// <param name="items"></param>
+		public VCollection(T[] items)
+		{
+			Items=items;
+		}
 		/// <summary>
 		/// Adds an item to the collection.
 		/// </summary>
@@ -56,12 +88,16 @@ namespace VEconomy
 		{
 			Array.Resize(ref _items, Length);
 			_items[^1]=item;
+			Added?.Invoke(this, item);
 		}
 
 		private void Update(int index, T item)
 		{
 			if(IsIndexValid(index))
+			{
 				Items[index]=item;
+				Updated?.Invoke(this, index);
+			}
 		}
 		/// <summary>
 		/// Removes an item at the given index.
@@ -73,6 +109,7 @@ namespace VEconomy
 			{
 				T[] items=IterateValidation((q, i)=>i!=index);
 				Items=items;
+				Removed?.Invoke(this, index);
 			}
 		}
 		/// <summary>
@@ -85,6 +122,7 @@ namespace VEconomy
 			{
 				T[] items=IterateValidation((q, i)=>!indices.Contains(i));
 				Items=items;
+				Removed?.Invoke(this, indices);
 			}
 		}
 		/// <summary>
@@ -102,7 +140,10 @@ namespace VEconomy
 		public void Clear()
 		{
 			if(_items is not null)
+			{
 				Array.Clear(_items);
+				Removed?.Invoke(this, null);
+			}
 		}
 		/// <summary>
 		/// Determines if the collection contains an item.
@@ -166,6 +207,7 @@ namespace VEconomy
 			{
 				ShiftRight(index, 1);
 				Items[index]=item;
+				Added?.Invoke(this, index);
 			}
 		}
 		/// <inheritdoc cref="ShiftLeft(int, int)"/>
@@ -198,6 +240,7 @@ namespace VEconomy
 			Move(0, len);
 			for(int i=0;i<len;i++)
 				Items[i]=items[i];
+			Added?.Invoke(this, null);
 		}
 		/// <summary>
 		/// Copys the element at the <paramref name="sourceIndex"/> to the <paramref name="destinationIndex"/>.
@@ -217,6 +260,7 @@ namespace VEconomy
 					destinationIndex=0;
 				}
 				Items[destinationIndex]=tmp;
+				Moved?.Invoke(this, new object[] { sourceIndex, destinationIndex });
 			}
 		}
 		/// <summary>
