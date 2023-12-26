@@ -1,4 +1,6 @@
-﻿namespace VEconomy.Internals.Networking
+﻿using System.Text;
+
+namespace VEconomy.Internals.Networking
 {
 	internal class IntTable : VCollection<IntRecord>
 	{
@@ -11,6 +13,24 @@
 		/// The columns of the table.
 		/// </summary>
 		public string[] Columns { get; protected set; } = [];
+
+		private string _saveDirectoryPath;
+		/// <summary>
+		/// Gets or sets the save directory path.
+		/// </summary>
+		public string SaveDirectoryPath
+		{
+			get => _saveDirectoryPath;
+			set
+			{
+				string path=Path.GetFullPath(value);
+				bool hasExt=Path.HasExtension(path);
+				string dir=hasExt ? Path.GetDirectoryName(path)! : path;
+				if(!Directory.Exists(dir))
+					Directory.CreateDirectory(dir);
+				_saveDirectoryPath=dir;
+			}
+		}
 
 
 		/// <summary>
@@ -55,6 +75,37 @@
 		}
 
 		private static IntRecordItem CreateNewItem(string name, object value) => new IntRecordItem(name, value);
+
+		public async void Save()
+		{
+			await File.WriteAllBytesAsync(Path.Combine(SaveDirectoryPath, Name+".csv"), GenerateCsv());
+		}
+
+		public void Load(string tableName)
+		{
+			// Code to read the csv file and then create the records for each row and column.
+		}
+
+		protected byte[] GenerateCsv(Encoding? encoding=null) => (encoding??Encoding.Unicode).GetBytes(GetCsv());
+
+		private string GetCsv()
+		{
+			string res="";
+			foreach(var sel in this)
+				res+="\r\n"+sel.ToString();
+			return res;
+		}
+
+		private string GenerateHeader()
+		{
+			string res="";
+			foreach(var sel in Columns)
+				res+=(res.Length>0 ? "," : "") + GetFriendlyValue(sel);
+			return res;
+		}
+
+		private static string GetFriendlyValue(string value) => IntRecord.GetString(value);
+
 
 	}
 }
