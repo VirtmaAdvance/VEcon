@@ -6,7 +6,9 @@ namespace VEconomy
 	{
 
 		private T[]? _items;
-
+		/// <summary>
+		/// The collection of items.
+		/// </summary>
 		public T[] Items
 		{
 			get => _items is not null ? _items : Array.Empty<T>();
@@ -16,7 +18,12 @@ namespace VEconomy
 		/// Gets the length of the collection.
 		/// </summary>
 		public int Length => Items.Length;
-
+		/// <summary>
+		/// Gets or sets an element at the given <paramref name="index"/> position.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		public T this[int index]
 		{
 			get => IsIndexValid(index) ? Items[index] : throw new ArgumentOutOfRangeException(nameof(index));
@@ -157,15 +164,22 @@ namespace VEconomy
 				Items[index]=item;
 			}
 		}
-
-		private void ShiftRight(int startingIndex, int shiftLength)
+		/// <inheritdoc cref="ShiftLeft(int, int)"/>
+		/// <summary>
+		/// Shifts the items starting from the <paramref name="startingIndex"/> to the right of the array <paramref name="shiftLength"/> many times.
+		/// </summary>
+		protected void ShiftRight(int startingIndex, int shiftLength)
 		{
 			int len=Length;
 			for(int i=len;i>=startingIndex;i--)
 				Move(i, i+shiftLength);
 		}
-
-		private void ShiftLeft(int startingIndex, int shiftLength)
+		/// <summary>
+		/// Shifts the items starting from the <paramref name="startingIndex"/> to the left of the array <paramref name="shiftLength"/> many times.
+		/// </summary>
+		/// <param name="startingIndex">The index to start shifting the elements at.</param>
+		/// <param name="shiftLength">The number of places to move the elements by.</param>
+		protected void ShiftLeft(int startingIndex, int shiftLength)
 		{
 			for(int i=startingIndex;i<startingIndex+shiftLength;i++)
 				Move(i, i-shiftLength);
@@ -181,8 +195,12 @@ namespace VEconomy
 			for(int i=0;i<len;i++)
 				Items[i]=items[i];
 		}
-
-		private void Move(int sourceIndex, int destinationIndex)
+		/// <summary>
+		/// Copys the element at the <paramref name="sourceIndex"/> to the <paramref name="destinationIndex"/>.
+		/// </summary>
+		/// <param name="sourceIndex">The index of the element to move.</param>
+		/// <param name="destinationIndex">The index position to move the element at the <paramref name="sourceIndex"/> to.</param>
+		protected void Move(int sourceIndex, int destinationIndex)
 		{
 			if(IsIndexValid(sourceIndex))
 			{
@@ -201,9 +219,17 @@ namespace VEconomy
 		/// Reverses the order of the items in the collection.
 		/// </summary>
 		public void Reverse() => Array.Reverse(Items);
-
+		/// <summary>
+		/// Determines if the <paramref name="index"/> is within this collection's range.
+		/// </summary>
+		/// <param name="index">An <see cref="int">integer</see> value to test if it is within the collection's range.</param>
+		/// <returns>a <see cref="bool"/> representation of the condition's result.</returns>
 		protected bool IsIndexValid(int index) => index>-1 && index<Length;
-
+		/// <summary>
+		/// Determines if the indices reference a valid range.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
 		protected bool IsIndexValid(params int[] index) => index.All(q=>IsIndexValid(q));
 		/// <summary>
 		/// Finds the index position of the first occurance of a matching item.
