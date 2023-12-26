@@ -2,6 +2,10 @@
 
 namespace VEconomy
 {
+	/// <summary>
+	/// Provides a class object for creating a collection of items (Similar to the List class) that can be derived from and provides a more managable and customizable system.
+	/// </summary>
+	/// <typeparam name="T">The data-type of the items within the collection.</typeparam>
 	public class VCollection<T>:IEnumerable<T?>
 	{
 
@@ -244,10 +248,10 @@ namespace VEconomy
 			return -1;
 		}
 		/// <summary>
-		/// Finds the first occurance of a match
+		/// Finds the first occurance of a match.
 		/// </summary>
-		/// <param name="item"></param>
-		/// <returns></returns>
+		/// <param name="predicate">The operation to conduct on each item within the collection.</param>
+		/// <returns>the first item that matches the predicate rules.</returns>
 		public T? FirstOrDefault(Func<T, bool> predicate) => Items.FirstOrDefault(predicate);
 		/// <inheritdoc cref="FirstOrDefault(Func{T, bool})"/>
 		public T First(Func<T, bool> predicate) => Items.First(predicate);
