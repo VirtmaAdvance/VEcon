@@ -4,6 +4,16 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>VEcon</Title>
+    <Company>Daniel K. Valente</Company>
+    <Description>Provides a package for managing an economic system.</Description>
+    <Copyright>0BSD</Copyright>
+    <PackageTags>economy;econ;money;database;game;vadvance</PackageTags>
+    <PackageLicenseExpression>0BSD</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
 </Project>
