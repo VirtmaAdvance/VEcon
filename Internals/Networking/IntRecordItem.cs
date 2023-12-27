@@ -10,7 +10,7 @@
 		/// <summary>
 		/// The value of the record.
 		/// </summary>
-		public readonly object Value;
+		public readonly object? Value;
 
 
 		/// <summary>
@@ -18,7 +18,7 @@
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="value"></param>
-		public IntRecordItem(string name, object value)
+		public IntRecordItem(string name, object? value)
 		{
 			Name=name;
 			Value=value;

@@ -10,16 +10,23 @@
 				res[i]=this[i].Name;
 			return res;
 		}
-
-		public string ToString()
+		/// <summary>
+		/// Gets the SQL string representation of this object.
+		/// </summary>
+		/// <returns></returns>
+		public new string ToString()
 		{
 			string res="";
 			foreach(var sel in this)
 				res+=(res.Length>0 ? "," : "") + ""+GetString(sel.Value)+"";
 			return res;
 		}
-
-		public static string GetString(object value)
+		/// <summary>
+		/// Gets the <see cref="string"/> representation of the <paramref name="value"/>.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string GetString(object? value)
 		{
 			if(value is null)
 				return "null";
