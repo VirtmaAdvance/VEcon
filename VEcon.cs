@@ -3,7 +3,7 @@
 	public class VEcon
 	{
 
-		public double 
+		public readonly 
 
 		public readonly CurrencyWorth CurrencyWorthCollection=new ();
 
