@@ -1,4 +1,6 @@
-﻿namespace VEconomy.Internals.Networking
+﻿using VEconomy.Internals.ObjectExtensions;
+
+namespace VEconomy.Internals.Networking
 {
 	internal class IntRecord : VCollection<IntRecordItem>
 	{

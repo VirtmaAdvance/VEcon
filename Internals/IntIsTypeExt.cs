@@ -1,18 +1,9 @@
-﻿namespace VEconomy.Internals
+﻿using VEconomy.Internals.ObjectExtensions;
+
+namespace VEconomy.Internals
 {
 	internal static class IntIsTypeExt
 	{
-		/// <summary>
-		/// Determines if the <paramref name="source"/> is any of the given <paramref name="types"/>.
-		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="types"></param>
-		/// <returns></returns>
-		public static bool Is(this object source, params Type[] types)
-		{
-			Type type=source.GetType();
-			return types.Any(q=>q.IsAssignableFrom(type));
-		}
 		/// <summary>
 		/// Determines if the <paramref name="source"/> is a number.
 		/// </summary>

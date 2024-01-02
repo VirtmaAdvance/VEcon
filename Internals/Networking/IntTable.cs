@@ -14,7 +14,9 @@ namespace VEconomy.Internals.Networking
 		/// <summary>
 		/// The columns of the table.
 		/// </summary>
-		public string[] Columns { get; protected set; } = [];
+		public string[] ColumnNames { get; protected set; } = [];
+
+		public ColumnCollection Columns { get; protected set; } = [];
 
 		private string? _saveDirectoryPath;
 		/// <summary>
@@ -61,7 +63,7 @@ namespace VEconomy.Internals.Networking
 
 		private void UpdateColumnCollection(object sender, object? output)
 		{
-			Columns=GetColumnNames();
+			ColumnNames=GetColumnNames();
 		}
 
 		private string[] GetColumnNames() => Items.Length>0 ? Items[^1].GetColumnNames() : [];
@@ -71,15 +73,19 @@ namespace VEconomy.Internals.Networking
 		/// <param name="args"></param>
 		public void AddRaw(params object[] args)
 		{
-			if(args.Length<Columns.Length)
+			if(args.Length<ColumnNames.Length)
 			{
 				IntRecord ins=new IntRecord();
-				for(int i = 0;i<Columns.Length;i++)
+				for(int i = 0;i<ColumnNames.Length;i++)
 					if(i<args.Length)
-						ins.Add(CreateNewItem(Columns[i], args[i]));
+						ins.Add(CreateNewItem(ColumnNames[i], args[i]));
 				Add(ins);
 			}
 		}
+
+		public void AddColumn(string name, ColumnType type) => AddColumn(new (name, type));
+
+		public void AddColumn(DatabaseTableColumn column) => Columns.Add(column);
 
 		private static IntRecordItem CreateNewItem(string name, object value) => new IntRecordItem(name, value);
 
@@ -147,12 +153,29 @@ namespace VEconomy.Internals.Networking
 		private string GenerateHeader()
 		{
 			string res="";
-			foreach(var sel in Columns)
+			foreach(var sel in ColumnNames)
 				res+=(res.Length>0 ? "," : "") + GetFriendlyValue(sel);
 			return res;
 		}
 
 		private static string GetFriendlyValue(string value) => IntRecord.GetString(value);
+
+
+		public string GenerateSqlQuery()
+		{
+			string res="";
+
+			return res;
+		}
+
+		protected string GetColumnSql()
+		{
+			string res="";
+			foreach(var sel in ColumnNames)
+
+			return res;
+		}
+
 
 	}
 }
